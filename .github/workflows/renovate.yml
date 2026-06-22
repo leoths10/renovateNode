@@ -19,3 +19,16 @@ jobs:
 
             - name: docker up
               run: docker compose up -d
+
+            - name: check compose with renovate
+              uses: renovatebot/github-action@v46.1.16
+              with:
+                token: ${{ secrets.RENOVATE }}
+              env:
+                LOG_LEVEL: "debug"
+                RENOVATE_REPOSITORIES: "leoths10/renovateNode"
+            
+            - name: Clean container
+              if: always()
+              run: docker compose down
+        
